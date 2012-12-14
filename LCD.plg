@@ -1,0 +1,455 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Personal\Projects\LCP2468_I2C_AccessControlSystem\I2C.uvproj
+Project File Date:  12/06/2012
+
+<h2>Output:</h2>
+Build target 'Internal Flash'
+compiling main.c...
+assembling serialISR.s...
+compiling sensors.c...
+sensors.c(191): error:  #20: identifier "OUTDOOR_BTN_PRESSED" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(197): error:  #20: identifier "OUTDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(202): error:  #20: identifier "OUTDOOR_CLOSE" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(207): error:  #20: identifier "INDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(212): error:  #20: identifier "INDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(216): error:  #20: identifier "INDOOR_CLOSE" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(169): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(170): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+controller.c(125): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+controller.c:           xQueueSendToBack(xGlobalStateQueueQ, state_transition, 10);
+controller.c:           ^
+controller.c(189): error:  #167: argument of type "ulong" is incompatible with parameter of type "void *const"
+controller.c:                   xQueueReceive( xGlobalStateQueueQ, state_transition, portMAX_DELAY);
+controller.c:                   ^
+controller.c(191): error:  #165: too few arguments in function call
+controller.c:                   stateMachine[globalState][state_transition]();
+controller.c:                                                               ^
+controller.c: controller.c: 0 warnings, 3 errors
+compiling lcd.c...
+compiling timer.c...
+timer.c(48): error:  #20: identifier "FIVE_SECONDS_PASSED" is undefined
+timer.c:        xQueueSendFromISR(xGlobalStateQueueQ, FIVE_SECONDS_PASSED, &xHigherPriorityTaskWoken);
+timer.c:        ^
+timer.c(53): warning:  #223-D: function "stopTimer" declared implicitly
+timer.c:        stopTimer();
+timer.c:        ^
+timer.c(63): error:  #159: declaration is incompatible with previous "stopTimer" (declared at line 53)
+timer.c:   void stopTimer()
+timer.c:        ^
+timer.c: timer.c: 1 warning, 2 errors
+assembling portASM.s...
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(191): error:  #20: identifier "OUTDOOR_BTN_PRESSED" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(197): error:  #20: identifier "OUTDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(202): error:  #20: identifier "OUTDOOR_CLOSE" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(207): error:  #20: identifier "INDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(212): error:  #20: identifier "INDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(216): error:  #20: identifier "INDOOR_CLOSE" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(169): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(170): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+controller.c(125): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+controller.c:           xQueueSendToBack(xGlobalStateQueueQ, state_transition, 10);
+controller.c:           ^
+controller.c(189): error:  #167: argument of type "ulong" is incompatible with parameter of type "void *const"
+controller.c:                   xQueueReceive( xGlobalStateQueueQ, state_transition, portMAX_DELAY);
+controller.c:                   ^
+controller.c: controller.c: 0 warnings, 2 errors
+compiling timer.c...
+timer.c(48): error:  #20: identifier "FIVE_SECONDS_PASSED" is undefined
+timer.c:        xQueueSendFromISR(xGlobalStateQueueQ, FIVE_SECONDS_PASSED, &xHigherPriorityTaskWoken);
+timer.c:        ^
+timer.c(53): warning:  #223-D: function "stopTimer" declared implicitly
+timer.c:        stopTimer();
+timer.c:        ^
+timer.c(63): error:  #159: declaration is incompatible with previous "stopTimer" (declared at line 53)
+timer.c:   void stopTimer()
+timer.c:        ^
+timer.c: timer.c: 1 warning, 2 errors
+Target not created
+Clean started: Project: 'I2C'
+   deleting intermediate output files for target 'Internal Flash'
+Build target 'Internal Flash'
+assembling LPC2400.s...
+compiling main.c...
+compiling console.c...
+compiling Retarget.c...
+compiling serial.c...
+assembling serialISR.s...
+compiling sensors.c...
+sensors.c(192): error:  #20: identifier "OUTDOOR_BTN_PRESSED" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(198): error:  #20: identifier "OUTDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(203): error:  #20: identifier "OUTDOOR_CLOSE" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(208): error:  #20: identifier "INDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(213): error:  #20: identifier "INDOOR_OPEN" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(217): error:  #20: identifier "INDOOR_CLOSE" is undefined
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(170): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(171): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+controller.c(125): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+controller.c:           xQueueSendToBack(xGlobalStateQueueQ, state_transition, 10);
+controller.c:           ^
+controller.c(189): error:  #167: argument of type "ulong" is incompatible with parameter of type "void *const"
+controller.c:                   xQueueReceive( xGlobalStateQueueQ, state_transition, portMAX_DELAY);
+controller.c:                   ^
+controller.c: controller.c: 0 warnings, 2 errors
+compiling lcd.c...
+compiling timer.c...
+timer.c(48): error:  #20: identifier "FIVE_SECONDS_PASSED" is undefined
+timer.c:        xQueueSendFromISR(xGlobalStateQueueQ, FIVE_SECONDS_PASSED, &xHigherPriorityTaskWoken);
+timer.c:        ^
+timer.c(53): warning:  #223-D: function "stopTimer" declared implicitly
+timer.c:        stopTimer();
+timer.c:        ^
+timer.c(63): error:  #159: declaration is incompatible with previous "stopTimer" (declared at line 53)
+timer.c:   void stopTimer()
+timer.c:        ^
+timer.c: timer.c: 1 warning, 2 errors
+compiling list.c...
+compiling queue.c...
+compiling tasks.c...
+compiling port.c...
+assembling portASM.s...
+compiling heap_3.c...
+compiling font5x7.c...
+compiling lcd_grph.c...
+compiling lcd_hw.c...
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(207): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(213): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(218): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(223): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(228): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(232): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(185): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(186): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+controller.c(125): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+controller.c:           xQueueSendToBack(xGlobalStateQueueQ, state_transition, 10);
+controller.c:           ^
+controller.c(189): error:  #167: argument of type "ulong" is incompatible with parameter of type "void *const"
+controller.c:                   xQueueReceive( xGlobalStateQueueQ, state_transition, portMAX_DELAY);
+controller.c:                   ^
+controller.c: controller.c: 0 warnings, 2 errors
+compiling timer.c...
+timer.c(48): error:  #20: identifier "FIVE_SECONDS_PASSED" is undefined
+timer.c:        xQueueSendFromISR(xGlobalStateQueueQ, FIVE_SECONDS_PASSED, &xHigherPriorityTaskWoken);
+timer.c:        ^
+timer.c(53): warning:  #223-D: function "stopTimer" declared implicitly
+timer.c:        stopTimer();
+timer.c:        ^
+timer.c(63): error:  #159: declaration is incompatible with previous "stopTimer" (declared at line 53)
+timer.c:   void stopTimer()
+timer.c:        ^
+timer.c: timer.c: 1 warning, 2 errors
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(207): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(213): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(218): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(223): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(228): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(232): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(185): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(186): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+controller.c(125): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+controller.c:           xQueueSendToBack(xGlobalStateQueueQ, state_transition, 10);
+controller.c:           ^
+controller.c(189): error:  #167: argument of type "ulong" is incompatible with parameter of type "void *const"
+controller.c:                   xQueueReceive( xGlobalStateQueueQ, state_transition, portMAX_DELAY);
+controller.c:                   ^
+controller.c: controller.c: 0 warnings, 2 errors
+compiling timer.c...
+timer.c(58): error:  #20: identifier "FIVE_SECONDS_PASSED" is undefined
+timer.c:        xQueueSendFromISR(xGlobalStateQueueQ, FIVE_SECONDS_PASSED, &xHigherPriorityTaskWoken);
+timer.c:        ^
+timer.c: timer.c: 0 warnings, 1 error
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(207): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(213): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(218): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(223): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(228): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(232): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(185): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(186): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+controller.c(125): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+controller.c:           xQueueSendToBack(xGlobalStateQueueQ, state_transition, 10);
+controller.c:           ^
+controller.c(189): error:  #167: argument of type "ulong" is incompatible with parameter of type "void *const"
+controller.c:                   xQueueReceive( xGlobalStateQueueQ, state_transition, portMAX_DELAY);
+controller.c:                   ^
+controller.c: controller.c: 0 warnings, 2 errors
+compiling timer.c...
+timer.c(59): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+timer.c:        xQueueSendFromISR(xGlobalStateQueueQ, FIVE_SECONDS_PASSED, &xHigherPriorityTaskWoken);
+timer.c:        ^
+timer.c: timer.c: 0 warnings, 1 error
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(207): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(213): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(218): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(223): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(228): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(232): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(185): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(186): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+controller.c(125): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+controller.c:           xQueueSendToBack(xGlobalStateQueueQ, state_transition, 10);
+controller.c:           ^
+controller.c(189): error:  #167: argument of type "ulong" is incompatible with parameter of type "void *const"
+controller.c:                   xQueueReceive( xGlobalStateQueueQ, state_transition, portMAX_DELAY);
+controller.c:                   ^
+controller.c: controller.c: 0 warnings, 2 errors
+compiling timer.c...
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(207): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(213): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(218): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(223): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(228): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(232): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(185): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(186): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+controller.c(189): error:  #167: argument of type "ulong" is incompatible with parameter of type "void *const"
+controller.c:                   xQueueReceive( xGlobalStateQueueQ, state_transition, portMAX_DELAY);
+controller.c:                   ^
+controller.c: controller.c: 0 warnings, 1 error
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(207): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(213): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(218): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(223): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(228): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(232): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(185): warning:  #550-D: variable "changeState" was set but never used
+sensors.c:      unsigned char changeState;
+sensors.c:                    ^
+sensors.c(186): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 2 warnings, 6 errors
+compiling controller.c...
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(209): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(218): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                                      xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                                      ^
+sensors.c(223): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                                      xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                                      ^
+sensors.c(231): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                                      xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                                      ^
+sensors.c(239): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(243): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c(186): warning:  #177-D: variable "i" was declared but never referenced
+sensors.c:      unsigned int i;
+sensors.c:                   ^
+sensors.c: sensors.c: 1 warning, 6 errors
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+sensors.c(208): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_BTN_PRESSED, 10);
+sensors.c:                              ^
+sensors.c(217): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                                      xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_OPEN, 10);
+sensors.c:                                      ^
+sensors.c(222): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                                      xQueueSendToBack(xGlobalStateQueueQ, OUTDOOR_CLOSE, 10);
+sensors.c:                                      ^
+sensors.c(230): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                                      xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                                      ^
+sensors.c(238): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_OPEN, 10);
+sensors.c:                              ^
+sensors.c(242): error:  #167: argument of type "ulong" is incompatible with parameter of type "const void *const"
+sensors.c:                              xQueueSendToBack(xGlobalStateQueueQ, INDOOR_CLOSE, 10);
+sensors.c:                              ^
+sensors.c: sensors.c: 0 warnings, 6 errors
+Target not created
+Build target 'Internal Flash'
+compiling sensors.c...
+linking...
+Program Size: Code=14312 RO-data=104 RW-data=92 ZI-data=4199460  
+"LCD.axf" - 0 Error(s), 0 Warning(s).

@@ -1,0 +1,4 @@
+--cpu ARM7TDMI "lpc2400.o" "main.o" "console.o" "retarget.o" "serial.o" "serialisr.o" "sensors.o" "controller.o" "lcd.o" "timer.o" "list.o" "queue.o" "tasks.o" "port.o" ".\portasm.o" "heap_3.o" "font5x7.o" "lcd_grph.o" "lcd_hw.o" --strict --scatter "LCD.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\LCD.map" -o "LCD.axf"
