@@ -15,6 +15,7 @@
 #include "serial.h"
 #include <stdio.h>
 #include <string.h>
+#include "controller.h"
 
 /* Maximum task stack size */
 #define lcdSTACK_SIZE			( ( unsigned portBASE_TYPE ) 256 )
@@ -28,9 +29,11 @@ static void vLcdTask( void *pvParameters );
 
 /* my assignment code */
 extern xComPortHandle xConsolePortHandle(void);
-static xQueueHandle xTouchScreenPressedQ;
 
+extern const ulong PASSWORD_APPROVED;
+static xQueueHandle xTouchScreenPressedQ;
 extern xQueueHandle xGlobalStateQueueQ;
+extern const portTickType TICKS_TO_WAIT;
 
 void vStartLcd( unsigned portBASE_TYPE uxPriority )
 {
@@ -234,7 +237,7 @@ static portTASK_FUNCTION( vLcdTask, pvParameters )
 			/* see which button the user pressed
 			 * get the index of the button in buttonRectangles array */
 			selected_button_index = inWhichButton(x_pos, y_pos, buttonRects, button_num);
-			
+			//printf("selected button index: %d\r\n",selected_button_index);
 			/* only store the value when the first time the user touch the screen
 			 * i.e. if the user touch the screen and move his finger elsewhere,
 			 * I will not record the following event */
@@ -257,7 +260,8 @@ static portTASK_FUNCTION( vLcdTask, pvParameters )
 							if(checkPassword(digit, password, digit_len))
 							{
 								// password is valid, send message to queue
-
+								// xQueueSend(xGlobalStateQueueQ, &PASSWORD_APPROVED, TICKS_TO_WAIT);
+								sendToGlobalQueue(PASSWORD_APPROVED);
 							}
 							else
 							{
@@ -268,11 +272,11 @@ static portTASK_FUNCTION( vLcdTask, pvParameters )
 						else
 						{
 							// discard input
-							printf("More than four digits being pressed\r\n");
-
+							printf("Input was disgarded\r\n");
 						}
 
 						digit_current_index = 0;
+						flag = 1;
 						continue;
 					}
 						
@@ -311,24 +315,7 @@ static portTASK_FUNCTION( vLcdTask, pvParameters )
 						
 						// increase the index of the digit array
 						++digit_current_index;
-						
-						/*
-						// user type more than our buffer, print the value and clean the buffer.						
-						if(digit_current_index >= digit_len)
-						{
-							// feedback
-							printf("Buffer is full, you typed:\r\n");
-
-							// display all digits stored
-							displayResult(digit, digit_len);
-
-							// reset the index
-							digit_current_index = 0;		
-
-							// tell the user
-							printf("Buffer clear\r\n");				
-						}
-						*/						
+								
 					}
 				}
 				flag = 1; // set the flag, so will not record any new digit before the user release his finger

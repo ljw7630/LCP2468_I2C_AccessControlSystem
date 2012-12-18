@@ -6,7 +6,8 @@
 #include "lpc24xx.h"
 #include "controller.h"
 #include "sensors.h"
-#include "timer.h"
+#include "mytimer.h"
+#include "lcd_hw.h"
 
 #define controllerSTACK_SIZE			( ( unsigned portBASE_TYPE ) 256 )
 
@@ -28,8 +29,9 @@ const ulong INDOOR_BTN_PRESSED = 5L;
 const ulong INDOOR_OPEN = 6L;
 const ulong INDOOR_CLOSE = 7L;
 
-extern xQueueHandle xGlobalStateQueueQ;
+const portTickType TICKS_TO_WAIT = 10;
 
+extern xQueueHandle xGlobalStateQueueQ;
 
 static ulong globalState = OUTDOOR_LOCK_INDOOR_LOCK;
 
@@ -50,7 +52,7 @@ static ulong outdoorBtnPressed(ulong current_state, ulong state_transition)
 static ulong outdoorFiveSecondsPassed(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door lock\r\n");
-	stopTimer();
+	// stopTimer();
 	putLights( 0 );
 
 	return globalState = OUTDOOR_LOCK_INDOOR_LOCK;
@@ -94,12 +96,13 @@ static ulong indoorBtnPressed(ulong current_state, ulong state_transition)
 static ulong indoorFiveSecondsPassed(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door lock\r\n");
-	stopTimer();
+	// stopTimer();
 	putLights( 0 );
 
 	return globalState = OUTDOOR_LOCK_INDOOR_LOCK;
 	// return globalState
 }
+
 static ulong indoorOpen(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door open\r\n");
@@ -109,6 +112,7 @@ static ulong indoorOpen(ulong current_state, ulong state_transition)
 	return globalState = OUTDOOR_LOCK_INDOOR_OPEN;
 	// return globalState;
 }
+
 static ulong indoorClose(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door close(lock)\r\n");
@@ -121,17 +125,24 @@ static ulong waitingState(ulong current_state, ulong state_transition)
 {
 	// push the state_transition back to the tail of the queque
 	// return globalState;
-
+	
 	xQueueSendToBack(xGlobalStateQueueQ, &state_transition, 10);
-
+   	vTaskDelay(10/portTICK_RATE_MS);
 	return globalState;
 }
 
 static ulong emptyState(ulong current_state, ulong state_transition)
 {
 	// do nothing
-
+	printf("empty state\r\n");
 	return globalState;
+}
+
+
+inline void sendToGlobalQueue(ulong state)
+{
+	xQueueSend(xGlobalStateQueueQ, &state, TICKS_TO_WAIT);
+	printf("message: %d send to queue\r\n", state);
 }
 
 
@@ -176,6 +187,7 @@ void initializeStateMachine()
 
 void vStartController( unsigned portBASE_TYPE uxPriority )
 {
+	initializeStateMachine();
 	xTaskCreate( vControllerTask, ( signed char * )"Controller", controllerSTACK_SIZE, NULL, uxPriority, ( xTaskHandle * ) NULL);
 
 	printf("Controller task started ...\r\n");
@@ -183,11 +195,14 @@ void vStartController( unsigned portBASE_TYPE uxPriority )
 
 static portTASK_FUNCTION(vControllerTask, pvParameters)
 {
-	ulong state_transition;
+	ulong stateTransition;
 	while(1)
 	{
-		xQueueReceive( xGlobalStateQueueQ, &state_transition, portMAX_DELAY);
-
-		stateMachine[globalState][state_transition](globalState, state_transition);
+		if( xQueueReceive( xGlobalStateQueueQ, &stateTransition, portMAX_DELAY) == pdTRUE )
+		{
+			printf("global state: %lu\r\n", globalState);
+			printf("state transition: %lu\r\n", stateTransition);
+			stateMachine[globalState][stateTransition](globalState, stateTransition);
+		}		
 	}
 }

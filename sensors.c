@@ -36,7 +36,6 @@ extern const ulong INDOOR_BTN_PRESSED ;
 extern const ulong INDOOR_OPEN;
 extern const ulong INDOOR_CLOSE;
 
-
 /* Maximum task stack size */
 #define sensorsSTACK_SIZE			( ( unsigned portBASE_TYPE ) 256 )
 
@@ -133,6 +132,7 @@ unsigned char setLightOn(int index)
 {
 	unsigned char light = 0;
 	light |= (1 << (index*2));
+	printf("setLightOn: %d\r\n",light);
 	return light;
 }
 
@@ -203,42 +203,58 @@ static portTASK_FUNCTION( vSensorsTask, pvParameters )
     	{
     		if( changeState & mask[0] )
     		{
+				// printf("button 0 changed\r\n");
 	    		if( buttonState & mask[0] )
 	    		{
-	    			xQueueSendToBack(xGlobalStateQueueQ, &OUTDOOR_BTN_PRESSED, 10);
+	    			printf("btn send: %d\r\n",OUTDOOR_BTN_PRESSED);
+	    			xQueueSend(xGlobalStateQueueQ, &OUTDOOR_BTN_PRESSED, 10);
+	    			// sendToGlobalQueue(OUTDOOR_BTN_PRESSED);
 	    		}
 	    	}
 
     		// outer door pressed means open
     		if( changeState & mask[1])
     		{
+				// printf("button 1 changed\r\n");
 				if( buttonState & mask[1] )
 				{
-					xQueueSendToBack(xGlobalStateQueueQ, &OUTDOOR_OPEN, 10);
+					printf("btn send: %d\r\n",OUTDOOR_OPEN);
+					xQueueSend(xGlobalStateQueueQ, &OUTDOOR_OPEN, 10);
+					// sendToGlobalQueue(OUTDOOR_OPEN);
 				}
 				else // outer door release means close
 				{
-					xQueueSendToBack(xGlobalStateQueueQ, &OUTDOOR_CLOSE, 10);
+					printf("btn send: %d\r\n",OUTDOOR_CLOSE);
+					xQueueSend(xGlobalStateQueueQ, &OUTDOOR_CLOSE, 10);
+					// sendToGlobalQueue(OUTDOOR_CLOSE);
 				}
     		}
 
     		if( changeState & mask[2] )
     		{
+				// printf("button 2 changed\r\n");
     			if( buttonState & mask[2] ) 
     			{
-    				xQueueSendToBack(xGlobalStateQueueQ, &INDOOR_OPEN, 10);
+    				printf("btn send: %d\r\n",INDOOR_BTN_PRESSED);
+    				xQueueSend(xGlobalStateQueueQ, &INDOOR_BTN_PRESSED, 10);
+    				// sendToGlobalQueue(INDOOR_BTN_PRESSED);
     			}
     		}
 
     		if( changeState & mask[3] )
     		{
+				// printf("button 3 changed\r\n");
 	    		if( buttonState & mask[3] )
 	    		{
-	    			xQueueSendToBack(xGlobalStateQueueQ, &INDOOR_OPEN, 10);
+	    			printf("btn send: %d\r\n",INDOOR_OPEN);
+	    			xQueueSend(xGlobalStateQueueQ, &INDOOR_OPEN, 10);
+	    			// sendToGlobalQueue(INDOOR_OPEN);
 	    		}
 	    		else
 	    		{
-	    			xQueueSendToBack(xGlobalStateQueueQ, &INDOOR_CLOSE, 10);
+	    			printf("btn send: %d\r\n",INDOOR_CLOSE);
+	    			xQueueSend(xGlobalStateQueueQ, &INDOOR_CLOSE, 10);
+	    			// sendToGlobalQueue(INDOOR_CLOSE);
 	    		}
 	    	}
 			/* remember new state */

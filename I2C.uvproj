@@ -345,7 +345,7 @@
               <MiscControls></MiscControls>
               <Define>ARM7_LPC2468_TCD</Define>
               <Undefine></Undefine>
-              <IncludePath>.;..\FreeRTOS\Source\portable\TCD\ARM7_LPC2468;..\FreeRTOS\Source\include;.\LCD</IncludePath>
+              <IncludePath>.;..\FreeRTOS\Source\portable\TCD\ARM7_LPC2468;..\FreeRTOS\Source\include;.\LCD;..\FreeRTOS\Source</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -394,6 +394,60 @@
         </Group>
         <Group>
           <GroupName>Application Code</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>2</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath>..\FreeRTOS\Source\include</IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
           <Files>
             <File>
               <FileName>main.c</FileName>
@@ -461,14 +515,19 @@
               <FilePath>.\lcd.h</FilePath>
             </File>
             <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\timer.c</FilePath>
+              <FileName>lcdISR.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\lcdISR.s</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
+              <FileName>mytimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mytimer.c</FilePath>
+            </File>
+            <File>
+              <FileName>mytimer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\timer.h</FilePath>
+              <FilePath>.\mytimer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -519,6 +578,11 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\FreeRTOSConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\Source\timers.c</FilePath>
             </File>
           </Files>
         </Group>

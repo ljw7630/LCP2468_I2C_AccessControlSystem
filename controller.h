@@ -21,4 +21,6 @@ ulong emptyState(ulong, ulong);
 
 void initializeStateMachine(void);
 
+inline void sendToGlobalQueue(ulong state);
+
 #endif
