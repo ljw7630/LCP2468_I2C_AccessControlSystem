@@ -44,7 +44,7 @@ int main (void)
 	vStartSensors(1);
 
 	vStartLcd(1);
-
+	
 	/* Start the FreeRTOS Scheduler ... after this we're pre-emptive multitasking ...
 
 	NOTE : Tasks run in system mode and the scheduler runs in Supervisor mode.

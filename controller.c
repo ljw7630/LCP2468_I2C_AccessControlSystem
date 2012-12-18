@@ -200,8 +200,8 @@ static portTASK_FUNCTION(vControllerTask, pvParameters)
 	{
 		if( xQueueReceive( xGlobalStateQueueQ, &stateTransition, portMAX_DELAY) == pdTRUE )
 		{
-			printf("global state: %lu\r\n", globalState);
-			printf("state transition: %lu\r\n", stateTransition);
+			// printf("global state: %lu\r\n", globalState);
+			// printf("state transition: %lu\r\n", stateTransition);
 			stateMachine[globalState][stateTransition](globalState, stateTransition);
 		}		
 	}
