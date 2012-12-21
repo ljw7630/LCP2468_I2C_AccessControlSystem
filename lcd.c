@@ -43,6 +43,8 @@ void vStartLcd( unsigned portBASE_TYPE uxPriority )
 
 	/* Spawn the console task . */
 	xTaskCreate( vLcdTask, ( signed char * ) "Lcd", lcdSTACK_SIZE, NULL, uxPriority, ( xTaskHandle * ) NULL );
+	
+	printf("LCD task started ...\r\n");
 }
 
 /* record the button rectangle using [(x0,y0) -> upper left] and [(x1,y1) -> bottom right] */
@@ -252,16 +254,21 @@ static portTASK_FUNCTION( vLcdTask, pvParameters )
 					// change the background color of the button to give the user a feedback
 					changeButtonColorUsingButtonIndex(buttonRects[activated_button_index], displayStrings[activated_button_index], LIGHT_GRAY);
 					
+					// if the current index is pointing to length of the buffer, the buffer is full
 					if(digit_current_index == digit_len)
 					{
+						// if the user presses the OK button
 						if(ok_index == selected_button_index)
 						{
+							printf("OK button pressed\r\n");
 							// check password
 							if(checkPassword(digit, password, digit_len))
 							{
 								// password is valid, send message to queue
-								// xQueueSend(xGlobalStateQueueQ, &PASSWORD_APPROVED, TICKS_TO_WAIT);
-								sendToGlobalQueue(PASSWORD_APPROVED);
+								printf("Password correct\r\n");
+								printf("\r\n");
+								xQueueSend(xGlobalStateQueueQ, &PASSWORD_APPROVED, TICKS_TO_WAIT);
+								// sendToGlobalQueue(PASSWORD_APPROVED);
 							}
 							else
 							{
@@ -294,6 +301,7 @@ static portTASK_FUNCTION( vLcdTask, pvParameters )
 						// reset the index of the digit array to 0
 						digit_current_index = 0;
 						*/
+						printf("OK button pressed\r\n");
 						printf("You type less than four digits, input discarded\r\n");
 						digit_current_index = 0;
 					}

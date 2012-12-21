@@ -50,6 +50,7 @@ void vStartSensors( unsigned portBASE_TYPE uxPriority )
 	PCONP    |=  (1 << 7);                /* Enable power for I2C0              */
 
 	/* Initialize pins for SDA (P0.27) and SCL (P0.28) functions                */
+	/* We can check this though PINSEL1 table */
 	PINSEL1  &= ~0x03C00000;
 	PINSEL1  |=  0x01400000;
 
@@ -132,14 +133,14 @@ unsigned char setLightOn(int index)
 {
 	unsigned char light = 0;
 	light |= (1 << (index*2));
-	printf("setLightOn: %d\r\n",light);
+	// printf("setLightOn: %d\r\n",light);
 	return light;
 }
 
 /* Set I2C LEDs */
 void putLights(unsigned char lights)
 {
-	printf("in put lights: %d\r\n", lights);
+	//printf("in put lights: %d\r\n", lights);
     /* Initialise */
 	I20CONCLR =  I2C_AA | I2C_SI | I2C_STA | I2C_STO;
 
@@ -202,11 +203,10 @@ static portTASK_FUNCTION( vSensorsTask, pvParameters )
     	if(buttonState != lastButtonState)
     	{
     		if( changeState & mask[0] )
-    		{
-				// printf("button 0 changed\r\n");
+    		{				
 	    		if( buttonState & mask[0] )
 	    		{
-	    			printf("btn send: %d\r\n",OUTDOOR_BTN_PRESSED);
+	    			printf("button A press\r\n");
 	    			xQueueSend(xGlobalStateQueueQ, &OUTDOOR_BTN_PRESSED, 10);
 	    			// sendToGlobalQueue(OUTDOOR_BTN_PRESSED);
 	    		}
@@ -218,24 +218,23 @@ static portTASK_FUNCTION( vSensorsTask, pvParameters )
 				// printf("button 1 changed\r\n");
 				if( buttonState & mask[1] )
 				{
-					printf("btn send: %d\r\n",OUTDOOR_OPEN);
+					printf("button B hold\r\n");
 					xQueueSend(xGlobalStateQueueQ, &OUTDOOR_OPEN, 10);
 					// sendToGlobalQueue(OUTDOOR_OPEN);
 				}
 				else // outer door release means close
 				{
-					printf("btn send: %d\r\n",OUTDOOR_CLOSE);
+					printf("button B release\r\n");
 					xQueueSend(xGlobalStateQueueQ, &OUTDOOR_CLOSE, 10);
 					// sendToGlobalQueue(OUTDOOR_CLOSE);
 				}
     		}
 
     		if( changeState & mask[2] )
-    		{
-				// printf("button 2 changed\r\n");
-    			if( buttonState & mask[2] ) 
+    		{				    			
+				if( buttonState & mask[2] ) 
     			{
-    				printf("btn send: %d\r\n",INDOOR_BTN_PRESSED);
+    				printf("button C press\r\n");
     				xQueueSend(xGlobalStateQueueQ, &INDOOR_BTN_PRESSED, 10);
     				// sendToGlobalQueue(INDOOR_BTN_PRESSED);
     			}
@@ -246,13 +245,13 @@ static portTASK_FUNCTION( vSensorsTask, pvParameters )
 				// printf("button 3 changed\r\n");
 	    		if( buttonState & mask[3] )
 	    		{
-	    			printf("btn send: %d\r\n",INDOOR_OPEN);
+	    			printf("button D hold\r\n");
 	    			xQueueSend(xGlobalStateQueueQ, &INDOOR_OPEN, 10);
 	    			// sendToGlobalQueue(INDOOR_OPEN);
 	    		}
 	    		else
 	    		{
-	    			printf("btn send: %d\r\n",INDOOR_CLOSE);
+	    			printf("button D realse\r\n");
 	    			xQueueSend(xGlobalStateQueueQ, &INDOOR_CLOSE, 10);
 	    			// sendToGlobalQueue(INDOOR_CLOSE);
 	    		}

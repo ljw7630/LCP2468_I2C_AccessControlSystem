@@ -21,14 +21,21 @@ xTimerHandle xGlobalTimer;
 
 void vCreateTimer()
 {
+	/* 5 senconds = 5000 miliseconds. so number of ticks for will be 5000/portTICK_RATE_MS */
 	portTickType period = (portTickType) (5000/portTICK_RATE_MS);
+
+	/* 
+	 * name is "Timer", with a period of 5 senconds, do not automatically restart, 
+	 * pvTimerID = NULL is because we only use one timer, so we don't have to differentiate it in our callback function
+	 */
 	xGlobalTimer = xTimerCreate("Timer", period, pdFALSE, NULL, vTimerCallBack);
 }
 
+/* the callback method is called when the timer expired */
 static void vTimerCallBack(xTimerHandle xTimer)
 {
+	/* send timeout message to the global queue */
 	xQueueSend(xGlobalStateQueueQ, &FIVE_SECONDS_PASSED, TICKS_TO_WAIT);	
-	// sendToGlobalQueue(FIVE_SECONDS_PASSED);
 }
 
 void startTimer()
@@ -42,37 +49,3 @@ void stopTimer()
 	xTimerStop(xGlobalTimer, TICKS_TO_WAIT);
 	printf("timer stopped\r\n");
 }
-
-/*
-void vStartTimer( unsigned portBASE_TYPE uxPriority )
-{
-	xTimerQueue = xQueueCreate(1,0);
-	xTaskCreate( vTimerTask, ( signed char * ) "Timer", timerTaskSTACK_SIZE, NULL, uxPriority, ( xTaskHandle * ) NULL );	
-}
-
-void startTimer()
-{
-	flag = 1;
-	xQueueSend(xTimerQueue, 0, TICKS_TO_WAIT);
-	printf("start timer\r\n");
-}
-
-void stopTimer()
-{
-	flag = 0;
-	xQueueReceive(xTimerQueue, NULL, portMAX_DELAY);
-	printf("stop timer\r\n");
-}
-
-static portTASK_FUNCTION( vTimerTask, pvParameters )
-{
-	while(1)
-	{
-		if( pdTRUE  == xQueueReceive(xTimerQueue, NULL, portMAX_DELAY) )
-		{
-			mdelay(5000);
-			xQueueSend(xGlobalStateQueueQ, &FIVE_SECONDS_PASSED, TICKS_TO_WAIT);
-		}
-	}	
-}
-*/

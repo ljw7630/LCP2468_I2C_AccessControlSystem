@@ -45,19 +45,21 @@ static ulong outdoorBtnPressed(ulong current_state, ulong state_transition)
 	printf("index 0 light on\r\n");
 	putLights( setLightOn(0) );
 	startTimer();
-
-	return globalState = OUTDOOR_UNLOCK_INDOOR_LOCK;
-	// return globalState;
+   	
+	printf("\r\n");
+	return OUTDOOR_UNLOCK_INDOOR_LOCK;
 }
+
 static ulong outdoorFiveSecondsPassed(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door lock\r\n");
-	// stopTimer();
+	printf("index 0 light off\r\n");
 	putLights( 0 );
 
-	return globalState = OUTDOOR_LOCK_INDOOR_LOCK;
-	// return globalState;
+	printf("\r\n");
+	return OUTDOOR_LOCK_INDOOR_LOCK;
 }
+
 static ulong outdoorPasswordApproved(ulong current_state, ulong state_transition)
 {
 	printf("outer door unlock, inner door lock\r\n");
@@ -65,77 +67,88 @@ static ulong outdoorPasswordApproved(ulong current_state, ulong state_transition
 	putLights( setLightOn(0) );
 	startTimer();
 
-	return globalState = OUTDOOR_UNLOCK_INDOOR_LOCK;
-	// return globalState;
+	printf("\r\n");
+	return OUTDOOR_UNLOCK_INDOOR_LOCK;
 }
+
 static ulong outdoorOpen(ulong current_state, ulong state_transition)
 {
 	printf("outer door open, inner door lock\r\n");
 	stopTimer();
+	printf("index 0 light off\r\n");
 	putLights( 0 );
-
-	return globalState = OUTDOOR_OPEN_INDOOR_LOCK;
-	// return globalState;
+	
+	printf("\r\n");
+	return OUTDOOR_OPEN_INDOOR_LOCK;
 }
+
 static ulong outdoorClose(ulong current_state, ulong state_transition)
 {
 	printf("outer door close(lock), inner door lock\r\n");
-	return globalState = OUTDOOR_LOCK_INDOOR_LOCK;
-	// return globalState;
+	printf("\r\n");
+	return OUTDOOR_LOCK_INDOOR_LOCK;
 }
+
 static ulong indoorBtnPressed(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door unlock\r\n");
 	printf("index 2 light on\r\n");
 	putLights( setLightOn(2) );
 	startTimer();
-
-	return globalState = OUTDOOR_LOCK_INDOOR_UNLOCK;
-	// return globalState;
+	
+	printf("\r\n");
+	return OUTDOOR_LOCK_INDOOR_UNLOCK;
 }
+
 static ulong indoorFiveSecondsPassed(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door lock\r\n");
-	// stopTimer();
+	printf("index 2 light off\r\n");
 	putLights( 0 );
 
-	return globalState = OUTDOOR_LOCK_INDOOR_LOCK;
-	// return globalState
+	printf("\r\n");
+	return OUTDOOR_LOCK_INDOOR_LOCK;
 }
 
 static ulong indoorOpen(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door open\r\n");
 	stopTimer();
+	printf("index 2 light off\r\n");
 	putLights( 0 );
 
-	return globalState = OUTDOOR_LOCK_INDOOR_OPEN;
-	// return globalState;
+	printf("\r\n");
+	return OUTDOOR_LOCK_INDOOR_OPEN;
 }
 
 static ulong indoorClose(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door close(lock)\r\n");
 
-	return globalState = OUTDOOR_LOCK_INDOOR_LOCK;
-	// return globalState;
+	printf("\r\n");
+	return OUTDOOR_LOCK_INDOOR_LOCK;
 }
 
 static ulong waitingState(ulong current_state, ulong state_transition)
 {
 	// push the state_transition back to the tail of the queque
-	// return globalState;
-	
 	xQueueSendToBack(xGlobalStateQueueQ, &state_transition, 10);
+
+	// delay 10 milliseconds
    	vTaskDelay(10/portTICK_RATE_MS);
-	return globalState;
+
+	// printf("\r\n");
+   	// does not change the current state
+	return current_state;
 }
 
 static ulong emptyState(ulong current_state, ulong state_transition)
 {
 	// do nothing
-	printf("empty state\r\n");
-	return globalState;
+	printf("The action was rejected by the state matchine\r\n");
+
+	printf("\r\n");
+	return current_state;
 }
 
 
@@ -174,6 +187,9 @@ void initializeStateMachine()
 	stateMachine[OUTDOOR_LOCK_INDOOR_OPEN][INDOOR_CLOSE] = indoorClose;
 	
 	// waiting transitions
+	/* For example: if the inner door unclock and outer door button press,
+	 * My implementation will wait until the inner door lock and then unlock the outer door
+	 */
 	stateMachine[OUTDOOR_LOCK_INDOOR_UNLOCK][OUTDOOR_BTN_PRESSED] = waitingState;
 	stateMachine[OUTDOOR_LOCK_INDOOR_OPEN][OUTDOOR_BTN_PRESSED] = waitingState;
 
@@ -196,13 +212,14 @@ void vStartController( unsigned portBASE_TYPE uxPriority )
 static portTASK_FUNCTION(vControllerTask, pvParameters)
 {
 	ulong stateTransition;
+	printf("initial state: outer door lock, inner door lock\r\n");
 	while(1)
 	{
+		/* if receive sth */
 		if( xQueueReceive( xGlobalStateQueueQ, &stateTransition, portMAX_DELAY) == pdTRUE )
 		{
-			// printf("global state: %lu\r\n", globalState);
-			// printf("state transition: %lu\r\n", stateTransition);
-			stateMachine[globalState][stateTransition](globalState, stateTransition);
+			/* call the state transition function, update the globalState(current_state) */
+			globalState = stateMachine[globalState][stateTransition](globalState, stateTransition);
 		}		
 	}
 }
