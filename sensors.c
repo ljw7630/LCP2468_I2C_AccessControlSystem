@@ -129,11 +129,16 @@ unsigned char getButtons()
 	return ledData ^ 0xf;
 }
 
+unsigned char setLightOff(int index)
+{
+	unsigned char light = (0x3 << (index *2));
+	return ~light;
+}
+
 unsigned char setLightOn(int index)
 {
 	unsigned char light = 0;
 	light |= (1 << (index*2));
-	// printf("setLightOn: %d\r\n",light);
 	return light;
 }
 

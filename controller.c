@@ -34,6 +34,7 @@ const portTickType TICKS_TO_WAIT = 10;
 extern xQueueHandle xGlobalStateQueueQ;
 
 static ulong globalState = OUTDOOR_LOCK_INDOOR_LOCK;
+static unsigned char lightState;
 
 ulong (*stateMachine[5][8])(ulong, ulong);
 
@@ -42,8 +43,10 @@ static void vControllerTask(void *pvParameters);
 static ulong outdoorBtnPressed(ulong current_state, ulong state_transition)
 {
 	printf("outer door unlock, inner door lock\r\n");
-	printf("index 0 light on\r\n");
-	putLights( setLightOn(0) );
+	printf("index 0 light off\r\n");	
+	lightState &= setLightOff(0);	
+	putLights(lightState);
+
 	startTimer();
    	
 	printf("\r\n");
@@ -53,8 +56,9 @@ static ulong outdoorBtnPressed(ulong current_state, ulong state_transition)
 static ulong outdoorFiveSecondsPassed(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door lock\r\n");
-	printf("index 0 light off\r\n");
-	putLights( 0 );
+	printf("index 0 light on\r\n");
+	lightState |= setLightOn(0);
+	putLights( lightState );
 
 	printf("\r\n");
 	return OUTDOOR_LOCK_INDOOR_LOCK;
@@ -63,8 +67,10 @@ static ulong outdoorFiveSecondsPassed(ulong current_state, ulong state_transitio
 static ulong outdoorPasswordApproved(ulong current_state, ulong state_transition)
 {
 	printf("outer door unlock, inner door lock\r\n");
-	printf("index 0 light on\r\n");
-	putLights( setLightOn(0) );
+	printf("index 0 light off\r\n");
+	lightState &= setLightOff(0);
+	putLights(lightState);
+
 	startTimer();
 
 	printf("\r\n");
@@ -75,8 +81,6 @@ static ulong outdoorOpen(ulong current_state, ulong state_transition)
 {
 	printf("outer door open, inner door lock\r\n");
 	stopTimer();
-	printf("index 0 light off\r\n");
-	putLights( 0 );
 	
 	printf("\r\n");
 	return OUTDOOR_OPEN_INDOOR_LOCK;
@@ -85,6 +89,10 @@ static ulong outdoorOpen(ulong current_state, ulong state_transition)
 static ulong outdoorClose(ulong current_state, ulong state_transition)
 {
 	printf("outer door close(lock), inner door lock\r\n");
+	printf("index 0 light on\r\n");
+	lightState |= setLightOn(0);
+	putLights( lightState );
+
 	printf("\r\n");
 	return OUTDOOR_LOCK_INDOOR_LOCK;
 }
@@ -92,8 +100,9 @@ static ulong outdoorClose(ulong current_state, ulong state_transition)
 static ulong indoorBtnPressed(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door unlock\r\n");
-	printf("index 2 light on\r\n");
-	putLights( setLightOn(2) );
+	printf("index 2 light off\r\n");
+	lightState &= setLightOff(2);
+	putLights(lightState);
 	startTimer();
 	
 	printf("\r\n");
@@ -103,8 +112,9 @@ static ulong indoorBtnPressed(ulong current_state, ulong state_transition)
 static ulong indoorFiveSecondsPassed(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door lock\r\n");
-	printf("index 2 light off\r\n");
-	putLights( 0 );
+	printf("index 2 light on\r\n");
+	lightState |= setLightOn(2);
+	putLights( lightState );
 
 	printf("\r\n");
 	return OUTDOOR_LOCK_INDOOR_LOCK;
@@ -113,9 +123,8 @@ static ulong indoorFiveSecondsPassed(ulong current_state, ulong state_transition
 static ulong indoorOpen(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door open\r\n");
+
 	stopTimer();
-	printf("index 2 light off\r\n");
-	putLights( 0 );
 
 	printf("\r\n");
 	return OUTDOOR_LOCK_INDOOR_OPEN;
@@ -124,7 +133,9 @@ static ulong indoorOpen(ulong current_state, ulong state_transition)
 static ulong indoorClose(ulong current_state, ulong state_transition)
 {
 	printf("outer door lock, inner door close(lock)\r\n");
-
+	printf("index 2 light on\r\n");
+	lightState |= setLightOn(2);
+	putLights( lightState );
 	printf("\r\n");
 	return OUTDOOR_LOCK_INDOOR_LOCK;
 }
@@ -213,6 +224,12 @@ static portTASK_FUNCTION(vControllerTask, pvParameters)
 {
 	ulong stateTransition;
 	printf("initial state: outer door lock, inner door lock\r\n");
+	lightState = 0;
+	lightState |= setLightOn(0);
+	lightState |= setLightOn(2);
+	printf("index 0 light on\r\n");
+	printf("index 2 light on\r\n");
+	putLights( lightState );
 	while(1)
 	{
 		/* if receive sth */
